@@ -1,6 +1,8 @@
 api_platform:
     mapping:
-        paths: ['%kernel.project_dir%/src/Entity']
+        paths:
+            - '%kernel.project_dir%/src/Entity'
+            - '%kernel.project_dir%/config/api_platform'
     patch_formats:
         json: ['application/merge-patch+json']
     swagger:
@@ -9,3 +11,8 @@ api_platform:
             apiKey:
                 name: Authorization
                 type: header
+    collection:
+        pagination:
+            client_items_per_page: true
+            maximum_items_per_page: 50
+            items_per_page_parameter_name: perPage

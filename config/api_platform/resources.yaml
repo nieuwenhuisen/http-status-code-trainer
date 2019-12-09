@@ -1,0 +1,29 @@
+resources:
+  App\Entity\User:
+    itemOperations:
+      get:
+        access_control: 'is_granted("ROLE_ADMIN")'
+      put:
+        access_control: 'is_granted("ROLE_ADMIN")'
+    collectionOperations:
+      get:
+        access_control: 'is_granted("ROLE_ADMIN")'
+    attributes:
+      normalization_context:
+        groups: ['user:read']
+      denormalization_context:
+        groups: ['user:write']
+  App\Entity\StatusCode:
+    itemOperations:
+      get:
+        access_control: 'is_granted("ROLE_ADMIN")'
+      put:
+        access_control: 'is_granted("ROLE_ADMIN")'
+    collectionOperations:
+      get:
+        access_control: 'is_granted("ROLE_ADMIN")'
+    attributes:
+      normalization_context:
+        groups: ['statuscode:read']
+      denormalization_context:
+        groups: ['statuscode:write']

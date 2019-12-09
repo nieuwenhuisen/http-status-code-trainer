@@ -2,22 +2,12 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *     collectionOperations={
- *      "get"={
- *          "access_control"="is_granted('ROLE_ADMIN')"
- *      },
- *      "post"
- *     },
- *     normalizationContext={"groups"={"user:read"}}
- * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface, JWTUserInterface
@@ -31,7 +21,7 @@ class User implements UserInterface, JWTUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user:read"})
+     * @Groups({"user:read", "user:write"})
      */
     private $email;
 
@@ -60,6 +50,13 @@ class User implements UserInterface, JWTUserInterface
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 
     public function getUsername(): string
