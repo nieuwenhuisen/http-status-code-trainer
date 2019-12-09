@@ -1,11 +1,13 @@
 import React from "react";
 import { HydraAdmin } from "@api-platform/admin";
-import { Layout } from 'react-admin';
+import { Layout, Resource } from 'react-admin';
 
+// Import pages
 import { LoginPage } from './pages/login';
+import { UserListPage, UserEditPage } from './pages/user';
+import { StatusCodeListPage, StatusCodeEditPage } from './pages/status_code';
 
-import authProvider from './admin/authProvider';
-import dataProvider from './admin/dataProvider';
+import { authProvider, dataProvider } from './admin';
 
 const entrypoint = process.env.REACT_APP_API_ENTRYPOINT;
 
@@ -17,5 +19,7 @@ export default () => (
         entrypoint={entrypoint}
         appLayout={Layout}
         >
+            <Resource name="users" list={UserListPage} edit={UserEditPage} />
+            <Resource name="status_codes" list={StatusCodeListPage} edit={StatusCodeEditPage} />
     </HydraAdmin>
 );
