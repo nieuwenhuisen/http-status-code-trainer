@@ -1,4 +1,5 @@
 .idea
+/error_log
 
 ###> symfony/framework-bundle ###
 /.env.local
