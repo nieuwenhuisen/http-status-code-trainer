@@ -32,7 +32,7 @@ class User implements UserInterface, JWTUserInterface
     private $roles;
 
     /**
-     * @var string The hashed password
+     * @var string
      * @ORM\Column(type="string")
      */
     private $password;

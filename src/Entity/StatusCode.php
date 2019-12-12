@@ -14,13 +14,13 @@ class StatusCode
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")
-     * @Groups({"statuscode:read"})
+     * @Groups({"statuscode:get", "statuscode:post"})
      */
     private $code;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"statuscode:read", "statuscode:write"})
+     * @Groups({"statuscode:get", "statuscode:post"})
      */
     private $title;
 
