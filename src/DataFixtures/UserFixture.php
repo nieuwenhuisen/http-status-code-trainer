@@ -43,7 +43,7 @@ class UserFixture extends Fixture
         $user = new User($email, $roles);
 
         $password = $this->userPasswordEncoder->encodePassword($user, $plainPassword);
-        $user->changePassword($password);
+        $user->setPassword($password);
 
         return $user;
     }

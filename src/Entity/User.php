@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -36,6 +37,12 @@ class User implements UserInterface, JWTUserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @SerializedName("password")
+     * @Groups("user:write")
+     */
+    private $plainPassword;
 
     public function __construct(string $email, array $roles = [])
     {
@@ -78,9 +85,21 @@ class User implements UserInterface, JWTUserInterface
         return $this->password;
     }
 
-    public function changePassword(string $password): self
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
@@ -91,6 +110,7 @@ class User implements UserInterface, JWTUserInterface
 
     public function eraseCredentials(): void
     {
+        $this->plainPassword = null;
     }
 
     /**

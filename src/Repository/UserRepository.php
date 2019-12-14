@@ -31,7 +31,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
 
-        $user->changePassword($newEncodedPassword);
+        $user->setPassword($newEncodedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
     }
