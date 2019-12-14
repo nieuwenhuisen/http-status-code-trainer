@@ -6,7 +6,6 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
-use Faker\Generator;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixture extends Fixture
@@ -22,15 +21,15 @@ class UserFixture extends Fixture
         $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         // Create admin
         $admin = $this->createUser('admin@admin.com', self::DEFAULT_PASSWORD, ['ROLE_ADMIN']);
         $manager->persist($admin);
         $this->addReference('admin', $admin);
 
-        // Create 10 random users
-        for ($i = 1; $i <= 10; $i++) {
+        // Create 3 random users
+        for ($i = 1; $i <= 3; $i++) {
             $user = $this->createUser($this->faker->email, self::DEFAULT_PASSWORD);
             $manager->persist($user);
             $this->addReference('user_'.$i, $admin);

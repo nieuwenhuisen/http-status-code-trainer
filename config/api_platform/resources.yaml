@@ -2,13 +2,11 @@ resources:
   App\Entity\User:
     itemOperations:
       get:
-        access_control: 'is_granted("ROLE_ADMIN")'
       put:
-        access_control: 'is_granted("ROLE_ADMIN")'
     collectionOperations:
       get:
-        access_control: 'is_granted("ROLE_ADMIN")'
     attributes:
+      security: 'is_granted("ROLE_ADMIN")'
       normalization_context:
         groups: ['user:read']
       denormalization_context:
@@ -16,9 +14,7 @@ resources:
   App\Entity\StatusCode:
     itemOperations:
       get:
-        access_control: 'is_granted("ROLE_ADMIN")'
       put:
-        access_control: 'is_granted("ROLE_ADMIN")'
         normalization_context:
           groups: ['statuscode:put']
     collectionOperations:
@@ -26,7 +22,7 @@ resources:
         normalization_context:
           groups: ['statuscode:post']
       get:
-        access_control: 'is_granted("ROLE_ADMIN")'
     attributes:
+      security: 'is_granted("ROLE_ADMIN")'
       normalization_context:
         groups: ['statuscode:get']

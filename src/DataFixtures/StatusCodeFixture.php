@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StatusCodeFixture extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach (Response::$statusTexts as $code => $title) {
             $statusCode = new StatusCode($code, $title);
