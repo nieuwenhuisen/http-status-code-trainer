@@ -5,12 +5,9 @@ namespace App\Tests\Functional;
 use App\DataFixtures\StatusCodeFixture;
 use App\DataFixtures\UserFixture;
 use App\Test\ApiTestCase;
-use Liip\TestFixturesBundle\Test\FixturesTrait;
 
 class StatusCodeResourceTest extends ApiTestCase
 {
-    use FixturesTrait;
-
     public function testGetStatusCodes(): void
     {
         $this->loadFixtures([UserFixture::class, StatusCodeFixture::class]);

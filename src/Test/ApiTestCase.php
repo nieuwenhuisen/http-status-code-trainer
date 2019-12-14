@@ -6,9 +6,12 @@ use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase as BaseApiTestCase;
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
 use App\DataFixtures\UserFixture;
 use Doctrine\ORM\EntityManagerInterface;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 
 class ApiTestCase extends BaseApiTestCase
 {
+    use FixturesTrait;
+
     protected static $token = [];
 
     protected static function createAuthenticatedClient(string $username): Client

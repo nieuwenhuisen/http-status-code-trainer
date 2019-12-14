@@ -5,6 +5,7 @@ resources:
       put:
     collectionOperations:
       get:
+      post:
     attributes:
       security: 'is_granted("ROLE_ADMIN")'
       normalization_context:
