@@ -39,7 +39,7 @@ class UserDataPersister implements DataPersisterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function remove($data): void
     {

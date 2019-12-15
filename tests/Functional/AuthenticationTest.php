@@ -15,14 +15,14 @@ class AuthenticationTest extends ApiTestCase
         $response = $client->request('POST', '/authenticate', [
             'json' => [
                 'username' => 'user1@user.com',
-                'password' => UserFixture::DEFAULT_PASSWORD
+                'password' => UserFixture::DEFAULT_PASSWORD,
             ],
         ]);
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/json');
 
-        $data = \json_decode($response->getContent(), true);
+        $data = json_decode($response->getContent(), true);
 
         $this->assertArrayHasKey('token', $data);
     }
@@ -35,7 +35,7 @@ class AuthenticationTest extends ApiTestCase
         $client->request('POST', '/authenticate', [
             'json' => [
                 'username' => 'user1@user.com',
-                'password' => 'wrong'
+                'password' => 'wrong',
             ],
         ]);
 

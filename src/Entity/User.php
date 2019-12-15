@@ -117,7 +117,7 @@ class User implements UserInterface, JWTUserInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function createFromPayload($username, array $payload)
     {

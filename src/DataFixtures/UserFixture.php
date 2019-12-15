@@ -13,7 +13,7 @@ class UserFixture extends Fixture
 
     /**
      * List with dummy users.
-     * email, roles, plain password
+     * email, roles, plain password.
      */
     private const USERS = [
         'admin' => ['admin@admin.com', self::DEFAULT_PASSWORD, ['ROLE_ADMIN']],

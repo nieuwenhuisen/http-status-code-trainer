@@ -23,7 +23,7 @@ class StatusCodeResourceTest extends ApiTestCase
             '@context' => '/contexts/StatusCode',
             '@id' => '/status_codes',
             '@type' => 'hydra:Collection',
-            'hydra:totalItems' => 62
+            'hydra:totalItems' => 62,
         ]);
 
         $this->assertCount(30, $response->toArray()['hydra:member']);
@@ -44,7 +44,7 @@ class StatusCodeResourceTest extends ApiTestCase
             '@id' => $iri,
             '@type' => 'StatusCode',
             'code' => 200,
-            'title' => 'OK'
+            'title' => 'OK',
         ]);
     }
 
@@ -65,7 +65,7 @@ class StatusCodeResourceTest extends ApiTestCase
             '@context' => '/contexts/StatusCode',
             '@type' => 'StatusCode',
             'code' => 494,
-            'title' => 'Request Header Too Large'
+            'title' => 'Request Header Too Large',
         ]);
     }
 }

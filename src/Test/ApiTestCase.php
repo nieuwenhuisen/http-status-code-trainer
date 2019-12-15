@@ -23,11 +23,11 @@ class ApiTestCase extends BaseApiTestCase
             $response = $client->request('POST', '/authenticate', [
                 'json' => [
                     'username' => $username,
-                    'password' => UserFixture::DEFAULT_PASSWORD
+                    'password' => UserFixture::DEFAULT_PASSWORD,
                 ],
             ]);
 
-            $data = \json_decode($response->getContent(), true);
+            $data = json_decode($response->getContent(), true);
 
             self::$token[$username] = $data['token'];
         }

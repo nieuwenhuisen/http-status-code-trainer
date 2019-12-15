@@ -23,7 +23,7 @@ class UserResourceTest extends ApiTestCase
             '@context' => '/contexts/User',
             '@id' => '/users',
             '@type' => 'hydra:Collection',
-            'hydra:totalItems' => 4
+            'hydra:totalItems' => 4,
         ]);
 
         $this->assertCount(4, $response->toArray()['hydra:member']);
@@ -64,7 +64,7 @@ class UserResourceTest extends ApiTestCase
             '@context' => '/contexts/User',
             '@id' => $iri,
             '@type' => 'User',
-            'email' => 'user1@user.com'
+            'email' => 'user1@user.com',
         ]);
     }
 
