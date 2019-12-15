@@ -87,9 +87,9 @@ class StatusCodeResourceTest extends ApiTestCase
             'violations' => [
                 [
                     'propertyPath' => 'code',
-                    'message' => 'This value is already used.'
-                ]
-            ]
+                    'message' => 'This value is already used.',
+                ],
+            ],
         ]);
     }
 }
