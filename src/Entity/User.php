@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
@@ -49,10 +51,16 @@ class User implements UserInterface, JWTUserInterface
      */
     private $plainPassword;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Exam", mappedBy="user", orphanRemoval=true)
+     */
+    private $exams;
+
     public function __construct(string $email, array $roles = [])
     {
         $this->email = $email;
         $this->roles = $roles;
+        $this->exams = new ArrayCollection();
     }
 
     public function getId(): int
@@ -124,5 +132,36 @@ class User implements UserInterface, JWTUserInterface
     public static function createFromPayload($username, array $payload)
     {
         new self($username, $payload['roles']);
+    }
+
+    /**
+     * @return Collection|Exam[]
+     */
+    public function getExams(): Collection
+    {
+        return $this->exams;
+    }
+
+    public function addExam(Exam $exam): self
+    {
+        if (!$this->exams->contains($exam)) {
+            $this->exams[] = $exam;
+            $exam->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExam(Exam $exam): self
+    {
+        if ($this->exams->contains($exam)) {
+            $this->exams->removeElement($exam);
+            // set the owning side to null (unless already changed)
+            if ($exam->getUser() === $this) {
+                $exam->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
