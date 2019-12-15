@@ -4,6 +4,7 @@ namespace App\Tests\Functional;
 
 use App\DataFixtures\StatusCodeFixture;
 use App\DataFixtures\UserFixture;
+use App\Entity\StatusCode;
 use App\Test\ApiTestCase;
 
 class StatusCodeResourceTest extends ApiTestCase
@@ -31,14 +32,16 @@ class StatusCodeResourceTest extends ApiTestCase
     public function testGetStatusCodeDetail(): void
     {
         $this->loadFixtures([UserFixture::class, StatusCodeFixture::class]);
-
         $client = static::createAuthenticatedClient('admin@admin.com');
-        $client->request('GET', '/status_codes/200');
+
+        $iri = static::findIriBy(StatusCode::class, ['code' => 200]);
+
+        $client->request('GET', $iri);
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonContains([
             '@context' => '/contexts/StatusCode',
-            '@id' => '/status_codes/200',
+            '@id' => $iri,
             '@type' => 'StatusCode',
             'code' => 200,
             'title' => 'OK'
