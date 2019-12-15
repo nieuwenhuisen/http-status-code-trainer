@@ -9,7 +9,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StatusCodeRepository")
- * @UniqueEntity(fields={"code"})
  */
 class StatusCode
 {

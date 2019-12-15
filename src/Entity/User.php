@@ -14,7 +14,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"email"})
  */
 class User implements UserInterface, JWTUserInterface
 {
