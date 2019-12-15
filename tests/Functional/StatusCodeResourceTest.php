@@ -68,4 +68,28 @@ class StatusCodeResourceTest extends ApiTestCase
             'title' => 'Request Header Too Large',
         ]);
     }
+
+    public function testAlreadyUsedViolation(): void
+    {
+        $this->loadFixtures([UserFixture::class, StatusCodeFixture::class]);
+
+        $client = static::createAuthenticatedClient('admin@admin.com');
+        $client->request('POST', '/status_codes', ['json' => [
+            'code' => 200,
+            'title' => 'OK',
+        ]]);
+
+        $this->assertResponseStatusCodeSame(400);
+        $this->assertJsonContains([
+            '@context' => '/contexts/ConstraintViolationList',
+            '@type' => 'ConstraintViolationList',
+            'hydra:title' => 'An error occurred',
+            'violations' => [
+                [
+                    'propertyPath' => 'code',
+                    'message' => 'This value is already used.'
+                ]
+            ]
+        ]);
+    }
 }
