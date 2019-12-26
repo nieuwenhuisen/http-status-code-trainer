@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Ramsey\Uuid\Uuid;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ExamRepository")
@@ -14,15 +16,16 @@ class Exam
 
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
+     * @Groups({"exam:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"exam:read"})
      */
-    private $status = 'CREATED';
+    private $status = ExamStatus::CREATED;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="exams")
@@ -30,21 +33,19 @@ class Exam
      */
     private $user;
 
-    public function getId(): ?int
+    public function __construct()
+    {
+        $this->id = Uuid::uuid4()->toString();
+    }
+
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): string
     {
         return $this->status;
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
-
-        return $this;
     }
 
     public function getUser(): ?User
@@ -52,10 +53,18 @@ class Exam
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @Groups({"exam:read"})
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
     }
 }

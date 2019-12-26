@@ -1,4 +1,18 @@
 resources:
+  App\Entity\Exam:
+    collectionOperations:
+      post:
+        controller: App\Controller\CreateNewExamController
+        normalization_context:
+          groups: ['exam:post']
+    itemOperations:
+      get:
+    attributes:
+      security: 'is_granted("ROLE_USER")'
+      normalization_context:
+        groups: ['exam:read']
+      denormalization_context:
+        groups: ['exam:write']
   App\Entity\User:
     itemOperations:
       get:
