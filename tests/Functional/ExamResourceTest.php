@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
@@ -21,7 +23,7 @@ final class ExamResourceTest extends ApiTestCase
         $this->assertJsonContains([
             '@context' => '/contexts/Exam',
             '@type' => 'Exam',
-            'status' => 'created'
+            'status' => 'created',
         ]);
 
         $json = json_decode($response->getContent(), true);
