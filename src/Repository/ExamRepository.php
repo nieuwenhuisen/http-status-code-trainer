@@ -18,4 +18,9 @@ class ExamRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Exam::class);
     }
+
+    public function store(Exam $exam): void
+    {
+        $this->getEntityManager()->persist($exam);
+    }
 }

@@ -4,7 +4,7 @@ resources:
       post:
         controller: App\Controller\CreateNewExamController
         normalization_context:
-          groups: ['exam:post']
+          groups: ['exam:read']
     itemOperations:
       get:
     attributes:

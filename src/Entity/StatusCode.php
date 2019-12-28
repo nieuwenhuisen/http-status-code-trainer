@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -16,6 +16,12 @@ class StatusCode
 
     /**
      * @ORM\Id()
+     * @ORM\Column(type="string")
+     * @Groups({"statuscode:get", "statuscode:post"})
+     */
+    private $id;
+
+    /**
      * @ORM\Column(type="integer")
      * @Groups({"statuscode:get", "statuscode:post"})
      */
@@ -29,8 +35,14 @@ class StatusCode
 
     public function __construct(int $code, string $title)
     {
+        $this->id = Uuid::uuid4()->toString();
         $this->code = $code;
         $this->title = $title;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     public function getCode(): int

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Ramsey\Uuid\Uuid;
@@ -33,9 +35,17 @@ class Exam
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="exam", orphanRemoval=true, cascade={"persist"})
+     * @Groups({"exam:read"})
+     * @ORM\OrderBy({"position": "ASC"})
+     */
+    private $questions;
+
     public function __construct()
     {
         $this->id = Uuid::uuid4()->toString();
+        $this->questions = new ArrayCollection();
     }
 
     public function getId(): string
@@ -66,5 +76,22 @@ class Exam
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return Collection|Question[]
+     */
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Question $question): self
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions[] = $question;
+        }
+
+        return $this;
     }
 }

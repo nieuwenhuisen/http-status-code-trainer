@@ -3,22 +3,29 @@
 namespace App\Controller;
 
 use App\Entity\Exam;
+use App\Service\ExamService;
+use PHPUnit\Util\Exception;
 use Symfony\Component\Security\Core\Security;
 
 final class CreateNewExamController
 {
     private $security;
+    private $examService;
 
-    public function __construct(Security $security)
+    public function __construct(Security $security, ExamService $examService)
     {
         $this->security = $security;
+        $this->examService = $examService;
     }
 
     public function __invoke(): Exam
     {
-        $exam = new Exam;
-        $exam->setUser($this->security->getUser());
+        $user = $this->security->getUser();
 
-        return $exam;
+        if (!$user) {
+            throw new Exception('No user provided');
+        }
+
+        return $this->examService->createExamForUser($user);
     }
 }

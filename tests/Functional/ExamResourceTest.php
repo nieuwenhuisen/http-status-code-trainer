@@ -2,6 +2,7 @@
 
 namespace App\Tests\Functional;
 
+use App\DataFixtures\StatusCodeFixture;
 use App\DataFixtures\UserFixture;
 use App\Test\ApiTestCase;
 
@@ -9,10 +10,10 @@ final class ExamResourceTest extends ApiTestCase
 {
     public function testStartNewExam(): void
     {
-        $this->loadFixtures([UserFixture::class]);
+        $this->loadFixtures([UserFixture::class, StatusCodeFixture::class]);
         $client = static::createAuthenticatedClient('user1@user.com');
 
-        $client->request('POST', '/exams', ['json' => []]);
+        $response = $client->request('POST', '/exams', ['json' => []]);
 
         $this->assertResponseStatusCodeSame(201);
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
@@ -20,6 +21,12 @@ final class ExamResourceTest extends ApiTestCase
         $this->assertJsonContains([
             '@context' => '/contexts/Exam',
             '@type' => 'Exam',
+            'status' => 'created'
         ]);
+
+        $json = json_decode($response->getContent(), true);
+        $questions = $json['questions'];
+
+        $this->assertCount(20, $questions);
     }
 }
