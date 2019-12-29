@@ -85,11 +85,11 @@ class StatusCodeLog
 
     public function addCorrect(): void
     {
-        $this->correct++;
+        ++$this->correct;
     }
 
     public function addFail(): void
     {
-        $this->fails++;
+        ++$this->fails;
     }
 }

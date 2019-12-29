@@ -165,7 +165,7 @@ class User implements UserInterface, JWTUserInterface, EquatableInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isEqualTo(UserInterface $user): bool
     {

@@ -148,7 +148,7 @@ class Question
      */
     public function validate(ExecutionContextInterface $context): void
     {
-        if (in_array((string)$this->answer, $this->choices, true)) {
+        if (\in_array((string) $this->answer, $this->choices, true)) {
             return;
         }
 

@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\StatusCode;
 use App\Entity\StatusCodeLog;
 use App\Entity\User;
-use Composer\XdebugHandler\Status;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -26,7 +25,7 @@ class StatusCodeLogRepository extends ServiceEntityRepository
     {
         $statusCodeLog = $this->findOneBy([
            'user' => $user,
-           'statusCode' => $statusCode
+           'statusCode' => $statusCode,
         ]);
 
         if (!$statusCodeLog) {

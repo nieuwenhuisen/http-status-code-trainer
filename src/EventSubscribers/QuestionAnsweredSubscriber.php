@@ -1,11 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\EventSubscribers;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Question;
-use App\Entity\StatusCodeLog;
-use App\Entity\User;
 use App\Repository\StatusCodeLogRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -29,7 +29,7 @@ final class QuestionAnsweredSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::VIEW => ['postWrite', EventPriorities::POST_WRITE]
+            KernelEvents::VIEW => ['postWrite', EventPriorities::POST_WRITE],
         ];
     }
 

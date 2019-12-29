@@ -117,11 +117,13 @@ class Exam
 
         if ($done) {
             $this->status = ExamStatus::FINISHED;
+
             return true;
         }
 
         if (ExamStatus::CREATED === $this->status && $started) {
             $this->status = ExamStatus::STARTED;
+
             return true;
         }
 
