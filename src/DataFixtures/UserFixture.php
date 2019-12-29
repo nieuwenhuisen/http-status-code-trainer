@@ -15,7 +15,7 @@ class UserFixture extends Fixture
      * List with dummy users.
      * email, roles, plain password.
      */
-    private const USERS = [
+    public const USERS = [
         'admin' => ['admin@admin.com', self::DEFAULT_PASSWORD, ['ROLE_ADMIN']],
         'user_1' => ['user1@user.com', self::DEFAULT_PASSWORD, ['ROLE_USER']],
         'user_2' => ['user2@user.com', self::DEFAULT_PASSWORD, ['ROLE_USER']],
