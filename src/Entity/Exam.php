@@ -58,7 +58,7 @@ class Exam
         return $this->status;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }

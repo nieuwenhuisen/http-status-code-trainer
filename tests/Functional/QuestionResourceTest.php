@@ -52,4 +52,24 @@ final class QuestionResourceTest extends ApiTestCase
             'correct' => true,
         ]);
     }
+
+    public function testUserCanOnlyAnswerThereOwnQuestions(): void
+    {
+        $this->loadFixtures([UserFixture::class, StatusCodeFixture::class, ExamFixture::class]);
+        $client = static::createAuthenticatedClient('user1@user.com');
+
+        $user = $this->getRepository(User::class)->findOneBy(['email' => 'user2@user.com']);
+        $exam = $this->getRepository(Exam::class)->findOneBy(['user' => $user]);
+
+        /** @var Question $question */
+        $question = $exam->getQuestions()->first();
+
+        $questionUri = $this->findIriBy(Question::class, ['id' => $question->getId()]);
+
+        $client->request('PUT', $questionUri, ['json' => [
+            'answer' => 302,
+        ]]);
+
+        $this->assertResponseStatusCodeSame(403);
+    }
 }

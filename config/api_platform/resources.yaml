@@ -3,9 +3,10 @@ resources:
     collectionOperations: []
     itemOperations:
       get: ~
-      put: ~
+      put:
+        security: 'is_granted("ANSWER_QUESTION", object)'
     attributes:
-      security: 'is_granted("ROLE_USER")'
+      security: 'is_granted("ROLE_ADMIN")'
       denormalization_context:
         groups: ['question:write']
       normalization_context:
