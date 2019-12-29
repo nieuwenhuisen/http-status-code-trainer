@@ -5,5 +5,3 @@ App\Entity\User:
     email:
       - NotBlank: ~
       - Email: ~
-    password:
-      - NotBlank: ~

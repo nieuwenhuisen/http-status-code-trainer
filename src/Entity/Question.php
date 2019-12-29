@@ -34,26 +34,35 @@ class Question
     private $statusCode;
 
     /**
+     * @ORM\Column(type="simple_array", nullable=false)
+     * @Groups({"exam:read"})
+     */
+    private $choices;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"question:write"})
      */
     private $answer;
+
+    /**
+     * @Groups({"question:read"})
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $attempts = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
     private $position;
 
-    private function __construct(Exam $exam, StatusCode $statusCode, int $position = 0)
+    public function __construct(Exam $exam, StatusCode $statusCode, array $choices, int $position = 0)
     {
         $this->id = Uuid::uuid4()->toString();
         $this->exam = $exam;
         $this->statusCode = $statusCode;
         $this->position = $position;
-    }
-
-    public static function fromExamAndStatusCodeAndPosition(Exam $exam, StatusCode $statusCode, int $position): self
-    {
-        return new self($exam, $statusCode, $position);
+        $this->choices = $choices;
     }
 
     public function getId(): string
@@ -71,6 +80,11 @@ class Question
         return $this->statusCode;
     }
 
+    public function getChoices(): array
+    {
+        return $this->choices;
+    }
+
     /**
      * @Groups({"exam:read"})
      */
@@ -79,13 +93,39 @@ class Question
         return $this->statusCode->getTitle();
     }
 
+    public function getAttempts(): int
+    {
+        return $this->attempts;
+    }
+
+    /**
+     * @Groups({"exam:read"})
+     */
+    public function isAnswered(): bool
+    {
+        return null !== $this->answer;
+    }
+
+    /**
+     * @Groups({"question:read"})
+     */
+    public function isCorrect(): bool
+    {
+        if (!$this->isAnswered()) {
+            return false;
+        }
+
+        return $this->statusCode->getCode() === $this->answer;
+    }
+
     public function getAnswer(): ?int
     {
         return $this->answer;
     }
 
-    public function setAnswer(?int $answer): self
+    public function setAnswer(int $answer): self
     {
+        ++$this->attempts;
         $this->answer = $answer;
 
         return $this;

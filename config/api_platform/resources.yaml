@@ -1,4 +1,15 @@
 resources:
+  App\Entity\Question:
+    collectionOperations: []
+    itemOperations:
+      get: ~
+      put: ~
+    attributes:
+      security: 'is_granted("ROLE_USER")'
+      denormalization_context:
+        groups: ['question:write']
+      normalization_context:
+        groups: ['question:read']
   App\Entity\Exam:
     collectionOperations:
       post:

@@ -5,8 +5,8 @@ namespace App\Test;
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase as BaseApiTestCase;
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
 use App\DataFixtures\UserFixture;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectRepository;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 
 class ApiTestCase extends BaseApiTestCase

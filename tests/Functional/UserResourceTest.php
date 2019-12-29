@@ -40,7 +40,6 @@ class UserResourceTest extends ApiTestCase
         ]]);
 
         $this->assertResponseStatusCodeSame(201);
-
         $this->assertJsonEquals([
             '@context' => '/contexts/User',
             '@id' => '/users/5',

@@ -13,6 +13,7 @@ class StatusCodeFixture extends Fixture
     {
         foreach (Response::$statusTexts as $code => $title) {
             $statusCode = new StatusCode($code, $title);
+            $this->addReference('status_code_'.$code, $statusCode);
             $manager->persist($statusCode);
         }
 

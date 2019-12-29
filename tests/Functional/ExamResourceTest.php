@@ -29,6 +29,13 @@ final class ExamResourceTest extends ApiTestCase
         $json = json_decode($response->getContent(), true);
         $questions = $json['questions'];
 
-        $this->assertCount(20, $questions);
+        $this->assertCount(10, $questions);
+
+        $question = $questions[0];
+
+        $this->assertArrayHasKey('id', $question);
+        $this->assertArrayHasKey('choices', $question);
+        $this->assertArrayHasKey('question', $question);
+        $this->assertCount(5, $question['choices']);
     }
 }

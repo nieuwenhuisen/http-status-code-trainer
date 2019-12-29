@@ -31,4 +31,27 @@ class StatusCodeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getCodesGroupByType(): array
+    {
+        $codes = [];
+
+        $results = $this->createQueryBuilder('status_code')
+            ->select('status_code.code')
+            ->orderBy('status_code.code')
+            ->getQuery()
+            ->getResult();
+
+        foreach (array_column($results, 'code') as $code) {
+            $group = (int) mb_substr($code, 0, 1) * 100;
+
+            if (!isset($codes[$group])) {
+                $codes[$group] = [];
+            }
+
+            $codes[$group][] = $code;
+        }
+
+        return $codes;
+    }
 }
