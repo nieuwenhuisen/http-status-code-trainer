@@ -94,4 +94,37 @@ class Exam
 
         return $this;
     }
+
+    public function updateStatus(): bool
+    {
+        if (ExamStatus::FINISHED === $this->status) {
+            return false;
+        }
+
+        $started = false;
+        $done = true;
+
+        /** @var Question $question */
+        foreach ($this->questions as $question) {
+            if (!$started && $question->isAnswered()) {
+                $started = true;
+            }
+
+            if ($done && !$question->isCorrect()) {
+                $done = false;
+            }
+        }
+
+        if ($done) {
+            $this->status = ExamStatus::FINISHED;
+            return true;
+        }
+
+        if (ExamStatus::CREATED === $this->status && $started) {
+            $this->status = ExamStatus::STARTED;
+            return true;
+        }
+
+        return false;
+    }
 }

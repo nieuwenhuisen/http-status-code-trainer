@@ -1,8 +1,8 @@
 App\Entity\StatusCode:
   constraints:
-    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: code
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: id
   properties:
-    code:
+    id:
       - NotBlank: ~
     title:
       - NotBlank: ~

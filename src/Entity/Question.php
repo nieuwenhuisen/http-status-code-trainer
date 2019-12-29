@@ -5,7 +5,10 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Ramsey\Uuid\Uuid;
+use RuntimeException;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
@@ -125,6 +128,10 @@ class Question
 
     public function setAnswer(int $answer): self
     {
+        if ($this->isCorrect()) {
+            throw new RuntimeException('Answer already given.');
+        }
+
         ++$this->attempts;
         $this->answer = $answer;
 
@@ -134,5 +141,19 @@ class Question
     public function getPosition(): int
     {
         return $this->position;
+    }
+
+    /**
+     * @Assert\Callback()
+     */
+    public function validate(ExecutionContextInterface $context): void
+    {
+        if (in_array((string)$this->answer, $this->choices, true)) {
+            return;
+        }
+
+        $context->buildViolation(sprintf('Invalid answer %d', $this->answer))
+            ->atPath('answer')
+            ->addViolation();
     }
 }

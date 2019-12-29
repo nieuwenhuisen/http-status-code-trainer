@@ -72,4 +72,25 @@ final class QuestionResourceTest extends ApiTestCase
 
         $this->assertResponseStatusCodeSame(403);
     }
+
+    public function testOnlyChoicesCanBeUsedAsAnswer(): void
+    {
+        $email = 'user1@user.com';
+        $this->loadFixtures([UserFixture::class, StatusCodeFixture::class, ExamFixture::class]);
+        $client = static::createAuthenticatedClient($email);
+
+        $user = $this->getRepository(User::class)->findOneBy(['email' => $email]);
+        $exam = $this->getRepository(Exam::class)->findOneBy(['user' => $user]);
+
+        /** @var Question $question */
+        $question = $exam->getQuestions()->first();
+
+        $questionUri = $this->findIriBy(Question::class, ['id' => $question->getId()]);
+
+        $client->request('PUT', $questionUri, ['json' => [
+            'answer' => 500,
+        ]]);
+
+        $this->assertResponseStatusCodeSame(400);
+    }
 }

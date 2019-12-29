@@ -34,7 +34,7 @@ class StatusCodeResourceTest extends ApiTestCase
         $this->loadFixtures([UserFixture::class, StatusCodeFixture::class]);
         $client = static::createAuthenticatedClient('admin@admin.com');
 
-        $iri = static::findIriBy(StatusCode::class, ['code' => 200]);
+        $iri = static::findIriBy(StatusCode::class, ['id' => 200]);
 
         $client->request('GET', $iri);
 
@@ -84,12 +84,6 @@ class StatusCodeResourceTest extends ApiTestCase
             '@context' => '/contexts/ConstraintViolationList',
             '@type' => 'ConstraintViolationList',
             'hydra:title' => 'An error occurred',
-            'violations' => [
-                [
-                    'propertyPath' => 'code',
-                    'message' => 'This value is already used.',
-                ],
-            ],
         ]);
     }
 }

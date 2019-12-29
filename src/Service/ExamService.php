@@ -57,7 +57,7 @@ final class ExamService
 
         for ($i = 0; $i < 10; ++$i) {
             $statusCode = $statusCodes[$i];
-            $choices = $this->getRandomChoices($codes, $statusCode->getCode(), $optionsPerQuestion);
+            $choices = $this->getRandomChoices($codes, $statusCode->getId(), $optionsPerQuestion);
 
             $question = new Question($exam, $statusCode, $choices, $i);
             $exam->addQuestion($question);
