@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
+use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Response;
+use App\DataFixtures\ExamFixture;
 use App\DataFixtures\StatusCodeFixture;
 use App\DataFixtures\UserFixture;
+use App\Entity\Exam;
+use App\Entity\Question;
+use App\Entity\User;
 use App\Test\ApiTestCase;
 
 final class ExamResourceTest extends ApiTestCase
@@ -18,12 +23,62 @@ final class ExamResourceTest extends ApiTestCase
         $response = $client->request('POST', '/exams', ['json' => []]);
 
         $this->assertResponseStatusCodeSame(201);
+        $this->assertExamGet($response);
+    }
+
+    public function testGetExam(): void
+    {
+        $email = 'user1@user.com';
+        $this->loadFixtures([UserFixture::class, StatusCodeFixture::class, ExamFixture::class]);
+        $client = static::createAuthenticatedClient($email);
+
+        $user = $this->getRepository(User::class)->findOneBy(['email' => $email]);
+        $exam = $this->getRepository(Exam::class)->findOneBy(['user' => $user]);
+
+        $examUri = $this->findIriBy(Exam::class, ['id' => $exam->getId()]);
+
+        $response = $client->request('GET', $examUri);
+        $this->assertExamGet($response);
+    }
+
+    public function testFinishExam(): void
+    {
+        $email = 'user1@user.com';
+        $this->loadFixtures([UserFixture::class, StatusCodeFixture::class, ExamFixture::class]);
+        $client = static::createAuthenticatedClient($email);
+
+        $user = $this->getRepository(User::class)->findOneBy(['email' => $email]);
+        $exam = $this->getRepository(Exam::class)->findOneBy(['user' => $user]);
+
+        $examUri = $this->findIriBy(Exam::class, ['id' => $exam->getId()]);
+        $response = $client->request('GET', $examUri);
+        $json = json_decode($response->getContent(), true);
+        $questions = $json['questions'];
+
+        $answers = [301, 101, 204, 418, 403, 503, 205, 200, 307, 303];
+
+        foreach ($questions as $index => $question) {
+            $questionUri = $this->findIriBy(Question::class, ['id' => $question['id']]);
+
+            $client->request('PUT', $questionUri, ['json' => [
+                'answer' => $answers[$index],
+            ]]);
+
+            $this->assertResponseStatusCodeSame(200);
+        }
+
+        $response = $client->request('GET', $examUri);
+        $this->assertExamGet($response, 'finished');
+    }
+
+    private function assertExamGet(Response $response, string $status = 'created'): void
+    {
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
 
         $this->assertJsonContains([
             '@context' => '/contexts/Exam',
             '@type' => 'Exam',
-            'status' => 'created',
+            'status' => $status,
         ]);
 
         $json = json_decode($response->getContent(), true);
