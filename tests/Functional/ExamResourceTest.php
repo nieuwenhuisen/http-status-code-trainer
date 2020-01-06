@@ -93,4 +93,19 @@ final class ExamResourceTest extends ApiTestCase
         $this->assertArrayHasKey('question', $question);
         $this->assertCount(5, $question['choices']);
     }
+
+    public function testGetListOfExams(): void
+    {
+        $this->loadFixtures([UserFixture::class, StatusCodeFixture::class, ExamFixture::class]);
+        $client = static::createAuthenticatedClient('user1@user.com');
+
+        $client->request('GET', 'exams');
+
+        $this->assertResponseStatusCodeSame(200);
+        $this->assertJsonContains([
+            '@context' => '/contexts/Exam',
+            '@type' => 'hydra:Collection',
+            'hydra:totalItems' => 1,
+        ]);
+    }
 }

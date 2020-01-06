@@ -13,6 +13,7 @@ resources:
         groups: ['question:read']
   App\Entity\Exam:
     collectionOperations:
+      get: ~
       post:
         controller: App\Controller\CreateNewExamController
         normalization_context:
