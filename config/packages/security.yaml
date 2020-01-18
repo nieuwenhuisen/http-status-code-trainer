@@ -12,6 +12,10 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        refresh:
+            pattern:  ^/token/refresh
+            stateless: true
+            anonymous: true
         authenticate:
             pattern:  ^/authenticate
             stateless: true
@@ -31,5 +35,6 @@ security:
             anonymous: lazy
 
     access_control:
+        - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/authenticate, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

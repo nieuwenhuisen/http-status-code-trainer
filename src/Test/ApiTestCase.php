@@ -13,7 +13,7 @@ class ApiTestCase extends BaseApiTestCase
 {
     use FixturesTrait;
 
-    protected static $token = [];
+    protected static $users = [];
 
     protected static function createAuthenticatedClient(string $username): Client
     {
@@ -28,11 +28,10 @@ class ApiTestCase extends BaseApiTestCase
             ]);
 
             $data = json_decode($response->getContent(), true);
-
-            self::$token[$username] = $data['token'];
+            self::$users[$username] = $data;
         }
 
-        return static::createClient([], ['auth_bearer' => self::$token[$username]]);
+        return static::createClient([], ['auth_bearer' => self::$users[$username]['token']]);
     }
 
     protected function getEntityManager(): EntityManagerInterface
