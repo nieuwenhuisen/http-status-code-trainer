@@ -245,6 +245,9 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "sonata-project/google-authenticator": {
+        "version": "2.2.0"
+    },
     "symfony/apache-pack": {
         "version": "1.0",
         "recipe": {

@@ -15,3 +15,9 @@ api_platform:
             client_items_per_page: true
             maximum_items_per_page: 50
             items_per_page_parameter_name: perPage
+
+    exception_to_status:
+        App\Exception\MultiFactorAuthenticationIsAlreadyEnabledException: 400
+        App\Exception\MultiFactorAuthenticationCodeNotValidException: 400
+        App\Exception\MultiFactorAuthenticationNotVerifiedException: 409
+        App\Exception\MultiFactorAuthenticationIsNotEnabledException: 412

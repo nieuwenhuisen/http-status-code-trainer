@@ -16,10 +16,11 @@ class UserFixture extends Fixture
      * email, roles, plain password.
      */
     public const USERS = [
-        'admin' => ['admin@admin.com', self::DEFAULT_PASSWORD, ['ROLE_ADMIN']],
-        'user_1' => ['user1@user.com', self::DEFAULT_PASSWORD, ['ROLE_USER']],
-        'user_2' => ['user2@user.com', self::DEFAULT_PASSWORD, ['ROLE_USER']],
-        'user_3' => ['user3@user.com', self::DEFAULT_PASSWORD, ['ROLE_USER']],
+        'admin' => ['admin@admin.com', self::DEFAULT_PASSWORD, ['ROLE_ADMIN'], false],
+        'user_1' => ['user1@user.com', self::DEFAULT_PASSWORD, ['ROLE_USER'], false],
+        'user_2' => ['user2@user.com', self::DEFAULT_PASSWORD, ['ROLE_USER'], false],
+        'user_3' => ['user3@user.com', self::DEFAULT_PASSWORD, ['ROLE_USER'], false],
+        'user_mfa' => ['user4@user.com', self::DEFAULT_PASSWORD, ['ROLE_USER'], '2ADFDSJF86'],
     ];
 
     private $userPasswordEncoder;
@@ -31,10 +32,15 @@ class UserFixture extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        foreach (self::USERS as $index => [$email, $password, $roles]) {
+        foreach (self::USERS as $index => [$email, $password, $roles, $mfaKey]) {
             $user = new User($email, $roles);
             $user->setPassword($this->userPasswordEncoder->encodePassword($user, $password));
             $manager->persist($user);
+
+            if ($mfaKey) {
+                $user->setMfaKey($mfaKey);
+            }
+
             $this->addReference($index, $user);
         }
 

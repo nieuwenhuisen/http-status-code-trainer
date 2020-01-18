@@ -23,10 +23,10 @@ class UserResourceTest extends ApiTestCase
             '@context' => '/contexts/User',
             '@id' => '/users',
             '@type' => 'hydra:Collection',
-            'hydra:totalItems' => 4,
+            'hydra:totalItems' => 5,
         ]);
 
-        $this->assertCount(4, $response->toArray()['hydra:member']);
+        $this->assertCount(5, $response->toArray()['hydra:member']);
     }
 
     public function testCreateUser(): void
@@ -42,10 +42,10 @@ class UserResourceTest extends ApiTestCase
         $this->assertResponseStatusCodeSame(201);
         $this->assertJsonEquals([
             '@context' => '/contexts/User',
-            '@id' => '/users/5',
+            '@id' => '/users/6',
             '@type' => 'User',
             'email' => 'john@gmail.com',
-            'id' => 5,
+            'id' => 6,
         ]);
     }
 

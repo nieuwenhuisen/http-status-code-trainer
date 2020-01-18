@@ -19,6 +19,9 @@ class User implements UserInterface, JWTUserInterface, EquatableInterface
 {
     use TimestampableEntity;
 
+    public const MFA_ENABLED_KEY = 'mfa_enabled';
+    public const MFA_VERIFIED_KEY = 'mfa_verified';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -54,6 +57,12 @@ class User implements UserInterface, JWTUserInterface, EquatableInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Exam", mappedBy="user", orphanRemoval=true)
      */
     private $exams;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true, unique=true)
+     */
+    private $mfaKey;
 
     public function __construct(string $email, array $roles = [])
     {
@@ -160,6 +169,23 @@ class User implements UserInterface, JWTUserInterface, EquatableInterface
                 $exam->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isMfaEnabled(): bool
+    {
+        return null !== $this->mfaKey;
+    }
+
+    public function getMfaKey(): ?string
+    {
+        return $this->mfaKey;
+    }
+
+    public function setMfaKey(?string $mfaKey): self
+    {
+        $this->mfaKey = $mfaKey;
 
         return $this;
     }

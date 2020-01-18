@@ -31,6 +31,16 @@ resources:
       get:
       put:
       delete:
+      post_enable_mfa:
+        method: 'POST'
+        path: '/users/{id}/mfa_enable'
+        controller: App\Controller\EnableMultiFactorAuthentication
+        security: 'is_granted("ROLE_ADMIN") or object == user'
+      post_disable_mfa:
+        method: 'POST'
+        path: '/users/{id}/mfa_disable'
+        controller: App\Controller\DisableMultiFactorAuthentication
+        security: 'is_granted("ROLE_ADMIN") or object == user'
     collectionOperations:
       get:
       post:
@@ -55,3 +65,26 @@ resources:
       security: 'is_granted("ROLE_ADMIN")'
       normalization_context:
         groups: ['statuscode:get']
+  App\Entity\MultiFactorAuthenticationVerify:
+    itemOperations: []
+    collectionOperations:
+      post:
+        path: '/mfa_verify'
+        security: 'is_granted("IS_AUTHENTICATED_FULLY")'
+        controller: App\Controller\VerifyMultiFactorAuthentication
+
+#  App\Entity\MultiFactorAuthenticationEnable:
+#    itemOperations: []
+#    collectionOperations:
+#      post:
+#        path: '/mfa_enable'
+#        security: 'is_granted("IS_AUTHENTICATED_FULLY")'
+#        controller: App\Controller\EnableMultiFactorAuthentication
+#
+#  App\Entity\MultiFactorAuthenticationDisable:
+#    itemOperations: []
+#    collectionOperations:
+#      post:
+#        path: '/mfa_disable'
+#        security: 'is_granted("IS_AUTHENTICATED_FULLY")'
+#        controller: App\Controller\DisableMultiFactorAuthentication
