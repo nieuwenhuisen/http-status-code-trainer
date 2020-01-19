@@ -1,6 +1,7 @@
 resources:
   App\Entity\Question:
-    collectionOperations: []
+    collectionOperations:
+      get:
     itemOperations:
       get: ~
       put:
@@ -66,25 +67,14 @@ resources:
       normalization_context:
         groups: ['statuscode:get']
   App\Entity\MultiFactorAuthenticationVerify:
-    itemOperations: []
+    itemOperations:
+      get:
+        controller: ApiPlatform\Core\Action\NotFoundAction
+        read: false
+        output: false
     collectionOperations:
+      get:
       post:
         path: '/mfa_verify'
         security: 'is_granted("IS_AUTHENTICATED_FULLY")'
         controller: App\Controller\VerifyMultiFactorAuthentication
-
-#  App\Entity\MultiFactorAuthenticationEnable:
-#    itemOperations: []
-#    collectionOperations:
-#      post:
-#        path: '/mfa_enable'
-#        security: 'is_granted("IS_AUTHENTICATED_FULLY")'
-#        controller: App\Controller\EnableMultiFactorAuthentication
-#
-#  App\Entity\MultiFactorAuthenticationDisable:
-#    itemOperations: []
-#    collectionOperations:
-#      post:
-#        path: '/mfa_disable'
-#        security: 'is_granted("IS_AUTHENTICATED_FULLY")'
-#        controller: App\Controller\DisableMultiFactorAuthentication
