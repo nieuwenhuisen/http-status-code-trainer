@@ -3,7 +3,6 @@
 namespace App\Tests\Functional;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Response;
-use App\DataFixtures\StatusCodeFixture;
 use App\DataFixtures\UserFixture;
 use App\Entity\User;
 use App\Test\ApiTestCase;
@@ -138,7 +137,7 @@ final class MultifactorAuthenticationTest extends ApiTestCase
     public function testDisableMultifactorAuthentication(): void
     {
         $this->loadFixtures([UserFixture::class]);
-        $client = static::createAuthenticatedClient('user4@user.com');
+        $client = static::createAuthenticatedAndVerifiedClient('user4@user.com', '2ADFDSJF86');
 
         $client->request('POST', '/users/5/mfa_disable', ['json' => []]);
 

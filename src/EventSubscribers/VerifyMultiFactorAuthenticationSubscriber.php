@@ -28,7 +28,7 @@ final class VerifyMultiFactorAuthenticationSubscriber implements EventSubscriber
         ];
     }
 
-    public function verifyMultiFactorAuthentication(JWTDecodedEvent $event)
+    public function verifyMultiFactorAuthentication(JWTDecodedEvent $event): void
     {
         $payload = $event->getPayload();
         $request = $this->requestStack->getCurrentRequest();
