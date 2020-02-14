@@ -56,6 +56,8 @@ class UserResourceTest extends ApiTestCase
 
         $iri = static::findIriBy(User::class, ['email' => 'user1@user.com']);
 
+        $this->assertNotNull($iri, 'User iri not found');
+
         $client->request('GET', $iri);
 
         $this->assertResponseIsSuccessful();
@@ -74,6 +76,8 @@ class UserResourceTest extends ApiTestCase
 
         $iri = static::findIriBy(User::class, ['email' => 'user1@user.com']);
 
+        $this->assertNotNull($iri, 'User iri not found');
+
         $client->request('PUT', $iri, ['json' => [
             'email' => 'user1@example.com',
         ]]);
@@ -91,6 +95,8 @@ class UserResourceTest extends ApiTestCase
         $client = static::createAuthenticatedClient('admin@admin.com');
 
         $iri = static::findIriBy(User::class, ['email' => 'user1@user.com']);
+
+        $this->assertNotNull($iri, 'User iri not found');
 
         $client->request('DELETE', $iri);
         $this->assertResponseStatusCodeSame(204);

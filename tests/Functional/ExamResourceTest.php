@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Response;
 use App\DataFixtures\ExamFixture;
 use App\DataFixtures\StatusCodeFixture;
 use App\DataFixtures\UserFixture;
@@ -12,6 +11,7 @@ use App\Entity\Exam;
 use App\Entity\Question;
 use App\Entity\User;
 use App\Test\ApiTestCase;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 final class ExamResourceTest extends ApiTestCase
 {
@@ -36,6 +36,7 @@ final class ExamResourceTest extends ApiTestCase
         $exam = $this->getRepository(Exam::class)->findOneBy(['user' => $user]);
 
         $examUri = $this->findIriBy(Exam::class, ['id' => $exam->getId()]);
+        $this->assertNotNull($examUri, 'Exam uri not found');
 
         $response = $client->request('GET', $examUri);
         $this->assertExamGet($response);
@@ -51,6 +52,8 @@ final class ExamResourceTest extends ApiTestCase
         $exam = $this->getRepository(Exam::class)->findOneBy(['user' => $user]);
 
         $examUri = $this->findIriBy(Exam::class, ['id' => $exam->getId()]);
+        $this->assertNotNull($examUri, 'Exam uri not found');
+
         $response = $client->request('GET', $examUri);
         $json = json_decode($response->getContent(), true);
         $questions = $json['questions'];
@@ -59,6 +62,8 @@ final class ExamResourceTest extends ApiTestCase
 
         foreach ($questions as $index => $question) {
             $questionUri = $this->findIriBy(Question::class, ['id' => $question['id']]);
+
+            $this->assertNotNull($questionUri, 'Question uri not found');
 
             $client->request('PUT', $questionUri, ['json' => [
                 'answer' => $answers[$index],
@@ -71,7 +76,7 @@ final class ExamResourceTest extends ApiTestCase
         $this->assertExamGet($response, 'finished');
     }
 
-    private function assertExamGet(Response $response, string $status = 'created'): void
+    private function assertExamGet(ResponseInterface $response, string $status = 'created'): void
     {
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
 

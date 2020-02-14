@@ -28,6 +28,8 @@ final class QuestionResourceTest extends ApiTestCase
 
         $questionUri = $this->findIriBy(Question::class, ['id' => $question->getId()]);
 
+        $this->assertNotNull($questionUri, 'Question uri not found');
+
         $client->request('PUT', $questionUri, ['json' => [
             'answer' => 302,
         ]]);
@@ -66,6 +68,8 @@ final class QuestionResourceTest extends ApiTestCase
 
         $questionUri = $this->findIriBy(Question::class, ['id' => $question->getId()]);
 
+        $this->assertNotNull($questionUri, 'Question uri not found');
+
         $client->request('PUT', $questionUri, ['json' => [
             'answer' => 302,
         ]]);
@@ -86,6 +90,8 @@ final class QuestionResourceTest extends ApiTestCase
         $question = $exam->getQuestions()->first();
 
         $questionUri = $this->findIriBy(Question::class, ['id' => $question->getId()]);
+
+        $this->assertNotNull($questionUri, 'Question uri not found');
 
         $client->request('PUT', $questionUri, ['json' => [
             'answer' => 500,

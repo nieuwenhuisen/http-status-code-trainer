@@ -36,6 +36,8 @@ class StatusCodeResourceTest extends ApiTestCase
 
         $iri = static::findIriBy(StatusCode::class, ['id' => 200]);
 
+        $this->assertNotNull($iri, 'StatusCode iri not found');
+
         $client->request('GET', $iri);
 
         $this->assertResponseIsSuccessful();

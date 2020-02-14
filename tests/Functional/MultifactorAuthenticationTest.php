@@ -2,16 +2,19 @@
 
 namespace App\Tests\Functional;
 
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Response;
 use App\DataFixtures\UserFixture;
 use App\Entity\User;
 use App\Test\ApiTestCase;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Sonata\GoogleAuthenticator\GoogleAuthenticator;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 final class MultifactorAuthenticationTest extends ApiTestCase
 {
-    private function extractTokenPayloadFromResponse(Response $response): array
+    /**
+     * @return array<string>
+     */
+    private function extractTokenPayloadFromResponse(ResponseInterface $response): array
     {
         $data = json_decode($response->getContent(), true);
         $token = $data['token'];

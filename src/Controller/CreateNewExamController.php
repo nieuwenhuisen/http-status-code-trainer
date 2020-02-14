@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Exam;
+use App\Entity\User;
 use App\Service\ExamService;
 use PHPUnit\Util\Exception;
 use Symfony\Component\Security\Core\Security;
 
 final class CreateNewExamController
 {
-    private $security;
+    private Security $security;
     private $examService;
 
     public function __construct(Security $security, ExamService $examService)
@@ -24,7 +25,7 @@ final class CreateNewExamController
     {
         $user = $this->security->getUser();
 
-        if (!$user) {
+        if (!$user instanceof User) {
             throw new Exception('No user provided');
         }
 

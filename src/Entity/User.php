@@ -125,8 +125,9 @@ class User implements UserInterface, JWTUserInterface, EquatableInterface
         return $this;
     }
 
-    public function getSalt(): void
+    public function getSalt(): ?string
     {
+        return null;
     }
 
     public function eraseCredentials(): void
@@ -137,9 +138,9 @@ class User implements UserInterface, JWTUserInterface, EquatableInterface
     /**
      * {@inheritdoc}
      */
-    public static function createFromPayload($username, array $payload)
+    public static function createFromPayload($username, array $payload): self
     {
-        new self($username, $payload['roles']);
+        return new self($username, $payload['roles']);
     }
 
     /**
