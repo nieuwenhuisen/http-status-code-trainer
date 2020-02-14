@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -7,6 +9,7 @@ use Gesdinet\JWTRefreshTokenBundle\Entity\AbstractRefreshToken;
 
 /**
  * This class override Gesdinet\JWTRefreshTokenBundle\Entity\RefreshToken to have another table name.
+ *
  * @ORM\Entity
  * @ORM\Table("jwt_refresh_token")
  */

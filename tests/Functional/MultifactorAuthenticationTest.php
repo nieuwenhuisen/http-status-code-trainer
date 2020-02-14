@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
@@ -20,6 +22,7 @@ final class MultifactorAuthenticationTest extends ApiTestCase
         $token = $data['token'];
 
         $encoder = $this->getContainer()->get(JWTEncoderInterface::class);
+
         return $encoder->decode($token);
     }
 

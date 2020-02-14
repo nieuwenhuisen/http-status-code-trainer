@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\EventSubscribers;
 
@@ -21,6 +23,7 @@ final class VerifyMultiFactorAuthenticationSubscriber implements EventSubscriber
         $this->requestStack = $requestStack;
         $this->userRepository = $userRepository;
     }
+
     public static function getSubscribedEvents(): array
     {
         return [
