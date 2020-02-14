@@ -1,4 +1,6 @@
 {
+    "name": "nieuwenhuisen/http-status-code-trainer",
+    "description": "HTTP Status Code Trainer API",
     "type": "project",
     "license": "proprietary",
     "require": {
