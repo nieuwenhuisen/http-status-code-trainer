@@ -15,3 +15,15 @@ jobs:
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
+      
+    - name: Check PSR
+      run: vendor/bin/php-cs-fixer fix --diff --dry-run -v
+    
+    - name: Install phpunit
+      run: bin/phpunit install
+    
+    - name: Run test
+      run: bin/phpunit
+    
+    - name: Run phpstan
+      run: vendor/bin/phpstan analyse src tests --level 5
