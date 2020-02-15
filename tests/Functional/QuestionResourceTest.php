@@ -21,6 +21,8 @@ final class QuestionResourceTest extends ApiTestCase
         $client = static::createAuthenticatedClient($email);
 
         $user = $this->getRepository(User::class)->findOneBy(['email' => $email]);
+
+        /** @var Exam $exam */
         $exam = $this->getRepository(Exam::class)->findOneBy(['user' => $user]);
 
         /** @var Question $question */
@@ -61,6 +63,8 @@ final class QuestionResourceTest extends ApiTestCase
         $client = static::createAuthenticatedClient('user1@user.com');
 
         $user = $this->getRepository(User::class)->findOneBy(['email' => 'user2@user.com']);
+
+        /** @var Exam $exam */
         $exam = $this->getRepository(Exam::class)->findOneBy(['user' => $user]);
 
         /** @var Question $question */
@@ -84,6 +88,8 @@ final class QuestionResourceTest extends ApiTestCase
         $client = static::createAuthenticatedClient($email);
 
         $user = $this->getRepository(User::class)->findOneBy(['email' => $email]);
+
+        /** @var Exam $exam */
         $exam = $this->getRepository(Exam::class)->findOneBy(['user' => $user]);
 
         /** @var Question $question */

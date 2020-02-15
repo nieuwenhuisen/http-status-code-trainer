@@ -14,5 +14,5 @@ final class MultiFactorAuthenticationVerify
      * @Assert\NotBlank()
      * @Groups({"write"})
      */
-    public $code;
+    public string $code = '';
 }

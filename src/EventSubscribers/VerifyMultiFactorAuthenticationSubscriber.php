@@ -15,8 +15,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 final class VerifyMultiFactorAuthenticationSubscriber implements EventSubscriberInterface
 {
-    private $requestStack;
-    private $userRepository;
+    private RequestStack $requestStack;
+    private UserRepository $userRepository;
 
     public function __construct(RequestStack $requestStack, UserRepository $userRepository)
     {

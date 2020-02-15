@@ -5,6 +5,7 @@ includes:
 
 parameters:
     reportUnmatchedIgnoredErrors: false
+    checkGenericClassInNonGenericObjectType: false
 
     autoload_files:
         - bin/.phpunit/phpunit-8.5-0/vendor/autoload.php

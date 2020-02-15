@@ -16,6 +16,7 @@ resources:
     collectionOperations:
       get: ~
       post:
+        deserialize: false
         controller: App\Controller\CreateNewExamController
         normalization_context:
           groups: ['exam:read']

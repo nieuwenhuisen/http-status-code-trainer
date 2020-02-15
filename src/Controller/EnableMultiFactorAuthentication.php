@@ -13,9 +13,9 @@ use Symfony\Component\Security\Core\Security;
 
 final class EnableMultiFactorAuthentication
 {
-    private $entityManager;
-    private $googleAuthenticator;
-    private $security;
+    private EntityManagerInterface $entityManager;
+    private GoogleAuthenticator $googleAuthenticator;
+    private Security $security;
 
     public function __construct(EntityManagerInterface $entityManager, GoogleAuthenticator $googleAuthenticator, Security $security)
     {
@@ -24,7 +24,7 @@ final class EnableMultiFactorAuthentication
         $this->security = $security;
     }
 
-    public function __invoke()
+    public function __invoke(): JsonResponse
     {
         /** @var User $user */
         $user = $this->security->getUser();

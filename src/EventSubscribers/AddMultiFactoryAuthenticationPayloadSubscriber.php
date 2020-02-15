@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 final class AddMultiFactoryAuthenticationPayloadSubscriber implements EventSubscriberInterface
 {
-    private $requestStack;
+    private RequestStack $requestStack;
 
     public function __construct(RequestStack $requestStack)
     {

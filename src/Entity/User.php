@@ -28,42 +28,46 @@ class User implements UserInterface, JWTUserInterface, EquatableInterface
      * @ORM\Column(type="integer")
      * @Groups({"user:read"})
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"user:read", "user:write"})
      */
-    private $email;
+    private string $email;
 
     /**
+     * @var array<string>
      * @ORM\Column(type="json")
      */
-    private $roles;
+    private array $roles;
 
     /**
-     * @var string
      * @ORM\Column(type="string")
      */
-    private $password;
+    private string $password;
 
     /**
      * @SerializedName("password")
      * @Groups("user:write")
      */
-    private $plainPassword;
+    private string $plainPassword = '';
 
     /**
+     * @var Collection<Exam>
      * @ORM\OneToMany(targetEntity="App\Entity\Exam", mappedBy="user", orphanRemoval=true)
      */
-    private $exams;
+    private Collection $exams;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", nullable=true, unique=true)
      */
-    private $mfaKey;
+    private ?string $mfaKey = null;
 
+    /**
+     * @param array<string> $roles
+     */
     public function __construct(string $email, array $roles = [])
     {
         $this->email = $email;
@@ -71,7 +75,7 @@ class User implements UserInterface, JWTUserInterface, EquatableInterface
         $this->exams = new ArrayCollection();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -113,7 +117,7 @@ class User implements UserInterface, JWTUserInterface, EquatableInterface
         return $this;
     }
 
-    public function getPlainPassword(): ?string
+    public function getPlainPassword(): string
     {
         return $this->plainPassword;
     }
@@ -132,11 +136,12 @@ class User implements UserInterface, JWTUserInterface, EquatableInterface
 
     public function eraseCredentials(): void
     {
-        $this->plainPassword = null;
+        $this->plainPassword = '';
     }
 
     /**
-     * {@inheritdoc}
+     * @param string               $username
+     * @param array<array<string>> $payload
      */
     public static function createFromPayload($username, array $payload): self
     {
@@ -165,10 +170,6 @@ class User implements UserInterface, JWTUserInterface, EquatableInterface
     {
         if ($this->exams->contains($exam)) {
             $this->exams->removeElement($exam);
-            // set the owning side to null (unless already changed)
-            if ($exam->getUser() === $this) {
-                $exam->setUser(null);
-            }
         }
 
         return $this;

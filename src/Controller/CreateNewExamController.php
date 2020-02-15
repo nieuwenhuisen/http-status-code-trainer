@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Security;
 final class CreateNewExamController
 {
     private Security $security;
-    private $examService;
+    private ExamService $examService;
 
     public function __construct(Security $security, ExamService $examService)
     {

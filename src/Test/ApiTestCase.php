@@ -5,8 +5,8 @@ namespace App\Test;
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase as BaseApiTestCase;
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
 use App\DataFixtures\UserFixture;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Sonata\GoogleAuthenticator\GoogleAuthenticator;
 
@@ -14,7 +14,10 @@ class ApiTestCase extends BaseApiTestCase
 {
     use FixturesTrait;
 
-    protected static $users = [];
+    /**
+     * @var array<array<string>>
+     */
+    protected static array $users = [];
 
     protected static function createAuthenticatedClient(string $username): Client
     {
@@ -57,8 +60,11 @@ class ApiTestCase extends BaseApiTestCase
         return self::$container->get(EntityManagerInterface::class);
     }
 
-    protected function getRepository(string $className): ObjectRepository
+    /**
+     * @param class-string $entityName
+     */
+    protected function getRepository(string $entityName): EntityRepository
     {
-        return $this->getEntityManager()->getRepository($className);
+        return $this->getEntityManager()->getRepository($entityName);
     }
 }

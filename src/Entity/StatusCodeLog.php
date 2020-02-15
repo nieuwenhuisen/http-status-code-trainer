@@ -14,29 +14,29 @@ class StatusCodeLog
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private User $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\StatusCode")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $statusCode;
+    private StatusCode $statusCode;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $correct = 0;
+    private int $correct = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $fails = 0;
+    private int $fails = 0;
 
     public function __construct(User $user, StatusCode $statusCode)
     {
@@ -49,24 +49,24 @@ class StatusCodeLog
         return $this->id;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getStatusCode(): ?StatusCode
+    public function getStatusCode(): StatusCode
     {
         return $this->statusCode;
     }
 
-    public function setStatusCode(?StatusCode $statusCode): self
+    public function setStatusCode(StatusCode $statusCode): self
     {
         $this->statusCode = $statusCode;
 

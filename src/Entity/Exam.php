@@ -21,31 +21,34 @@ class Exam
      * @ORM\Column(type="string")
      * @Groups({"exam:read"})
      */
-    private $id;
+    private string $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"exam:read"})
      */
-    private $status = ExamStatus::CREATED;
+    private string $status = ExamStatus::CREATED;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="exams")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"exam:read"})
      */
-    private $user;
+    private User $user;
 
     /**
+     * @var Collection<Question>
      * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="exam", orphanRemoval=true, cascade={"persist"})
-     * @Groups({"exam:read"})
      * @ORM\OrderBy({"position": "ASC"})
+     * @Groups({"exam:read"})
      */
-    private $questions;
+    private Collection $questions;
 
-    public function __construct()
+    public function __construct(User $user)
     {
         $this->id = Uuid::uuid4()->toString();
         $this->questions = new ArrayCollection();
+        $this->user = $user;
     }
 
     public function getId(): string
@@ -63,7 +66,7 @@ class Exam
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(User $user): self
     {
         $this->user = $user;
 

@@ -20,17 +20,17 @@ class StatusCode
      * @SerializedName("code")
      * @Groups({"statuscode:get", "statuscode:post"})
      */
-    private $id;
+    private int $id = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"statuscode:get", "statuscode:post"})
      */
-    private $title;
+    private string $title = '';
 
-    public function __construct(int $code, string $title)
+    public function __construct(int $id, string $title)
     {
-        $this->id = $code;
+        $this->id = $id;
         $this->title = $title;
     }
 

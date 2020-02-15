@@ -22,50 +22,54 @@ class Question
      * @ORM\Column(type="string")
      * @Groups({"exam:read"})
      */
-    private $id;
+    private string $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Exam", inversedBy="questions")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $exam;
+    private Exam $exam;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\StatusCode")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $statusCode;
+    private StatusCode $statusCode;
 
     /**
+     * @var array<string>
      * @ORM\Column(type="simple_array", nullable=false)
      * @Groups({"exam:read"})
      */
-    private $choices;
+    private array $choices;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"question:write"})
      */
-    private $answer;
+    private ?int $answer = null;
 
     /**
      * @Groups({"question:read"})
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $attempts = 0;
+    private int $attempts = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $position;
+    private int $position;
 
+    /**
+     * @param array<string> $choices
+     */
     public function __construct(Exam $exam, StatusCode $statusCode, array $choices, int $position = 0)
     {
         $this->id = Uuid::uuid4()->toString();
         $this->exam = $exam;
         $this->statusCode = $statusCode;
-        $this->position = $position;
         $this->choices = $choices;
+        $this->position = $position;
     }
 
     public function getId(): string
@@ -83,6 +87,9 @@ class Question
         return $this->statusCode;
     }
 
+    /**
+     * @return array<string>
+     */
     public function getChoices(): array
     {
         return $this->choices;

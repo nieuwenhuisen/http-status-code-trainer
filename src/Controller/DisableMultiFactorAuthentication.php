@@ -12,8 +12,8 @@ use Symfony\Component\Security\Core\Security;
 
 final class DisableMultiFactorAuthentication
 {
-    private $entityManager;
-    private $security;
+    private EntityManagerInterface $entityManager;
+    private Security $security;
 
     public function __construct(EntityManagerInterface $entityManager, Security $security)
     {
@@ -21,7 +21,7 @@ final class DisableMultiFactorAuthentication
         $this->security = $security;
     }
 
-    public function __invoke()
+    public function __invoke(): JsonResponse
     {
         /** @var User $user */
         $user = $this->security->getUser();

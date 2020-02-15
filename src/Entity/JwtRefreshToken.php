@@ -16,20 +16,16 @@ use Gesdinet\JWTRefreshTokenBundle\Entity\AbstractRefreshToken;
 final class JwtRefreshToken extends AbstractRefreshToken
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="mfa_verifed", type="boolean")
      */
-    protected $mfaVerifed = false;
+    protected bool $mfaVerifed = false;
 
     /**
      * {@inheritdoc}

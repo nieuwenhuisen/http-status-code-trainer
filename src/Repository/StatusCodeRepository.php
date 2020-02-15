@@ -32,6 +32,9 @@ class StatusCodeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return array<array<string>>
+     */
     public function getCodesGroupByType(): array
     {
         $codes = [];

@@ -11,16 +11,21 @@ use App\Repository\StatusCodeRepository;
 
 final class ExamService
 {
-    private $statusCodeRepository;
+    private StatusCodeRepository $statusCodeRepository;
 
     public function __construct(StatusCodeRepository $statusCodeRepository)
     {
         $this->statusCodeRepository = $statusCodeRepository;
     }
 
+    /**
+     * @param array<array<string>> $groups
+     *
+     * @return array<string>
+     */
     private function getRandomChoices(array $groups, int $currentCode, int $amount): array
     {
-        $choices = [$currentCode];
+        $choices = [(string) $currentCode];
 
         $groupCode = (int) mb_substr((string) $currentCode, 0, 1) * 100;
 
@@ -39,7 +44,7 @@ final class ExamService
             }
 
             shuffle($group);
-            $choices[] = array_shift($group);
+            $choices[] = (string) array_shift($group);
         } while (\count($choices) < $amount);
 
         shuffle($choices);
@@ -49,8 +54,7 @@ final class ExamService
 
     public function createExamForUser(User $user, int $optionsPerQuestion = 5): Exam
     {
-        $exam = new Exam();
-        $exam->setUser($user);
+        $exam = new Exam($user);
 
         $codes = $this->statusCodeRepository->getCodesGroupByType();
         $statusCodes = $this->statusCodeRepository->getForUser($user);

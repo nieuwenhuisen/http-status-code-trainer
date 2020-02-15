@@ -11,19 +11,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\Security;
 
 final class QuestionAnsweredSubscriber implements EventSubscriberInterface
 {
-    private $entityManager;
-    private $statusCodeLogRepository;
-    private $security;
+    private EntityManagerInterface $entityManager;
+    private StatusCodeLogRepository $statusCodeLogRepository;
 
-    public function __construct(EntityManagerInterface $entityManager, StatusCodeLogRepository $statusCodeLogRepository, Security $security)
+    public function __construct(EntityManagerInterface $entityManager, StatusCodeLogRepository $statusCodeLogRepository)
     {
         $this->entityManager = $entityManager;
         $this->statusCodeLogRepository = $statusCodeLogRepository;
-        $this->security = $security;
     }
 
     public static function getSubscribedEvents(): array

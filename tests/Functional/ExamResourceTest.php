@@ -33,6 +33,8 @@ final class ExamResourceTest extends ApiTestCase
         $client = static::createAuthenticatedClient($email);
 
         $user = $this->getRepository(User::class)->findOneBy(['email' => $email]);
+
+        /** @var Exam $exam */
         $exam = $this->getRepository(Exam::class)->findOneBy(['user' => $user]);
 
         $examUri = $this->findIriBy(Exam::class, ['id' => $exam->getId()]);
@@ -49,6 +51,8 @@ final class ExamResourceTest extends ApiTestCase
         $client = static::createAuthenticatedClient($email);
 
         $user = $this->getRepository(User::class)->findOneBy(['email' => $email]);
+
+        /** @var Exam $exam */
         $exam = $this->getRepository(Exam::class)->findOneBy(['user' => $user]);
 
         $examUri = $this->findIriBy(Exam::class, ['id' => $exam->getId()]);

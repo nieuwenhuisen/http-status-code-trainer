@@ -8,11 +8,12 @@ use App\Entity\JwtRefreshToken;
 use App\Entity\User;
 use Gesdinet\JWTRefreshTokenBundle\Event\RefreshEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 final class SetMultiFactoryAuthenticationStatusAfterRefreshToken implements EventSubscriberInterface
 {
-    private $request;
+    private ?Request $request;
 
     public function __construct(RequestStack $requestStack)
     {

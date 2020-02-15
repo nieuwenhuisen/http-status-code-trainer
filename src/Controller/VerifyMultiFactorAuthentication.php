@@ -19,12 +19,12 @@ use Symfony\Component\Security\Core\Security;
 
 final class VerifyMultiFactorAuthentication
 {
-    private $security;
-    private $googleAuthenticator;
-    private $manager;
-    private $requestStack;
-    private $refreshTokenManager;
-    private $entityManager;
+    private Security $security;
+    private GoogleAuthenticator $googleAuthenticator;
+    private JWTTokenManagerInterface $manager;
+    private RequestStack $requestStack;
+    private RefreshTokenManagerInterface $refreshTokenManager;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(Security $security, GoogleAuthenticator $googleAuthenticator, JWTTokenManagerInterface $manager, RequestStack $requestStack, RefreshTokenManagerInterface $refreshTokenManager, EntityManagerInterface $entityManager)
     {
