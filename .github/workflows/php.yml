@@ -26,6 +26,6 @@ jobs:
     - name: Run test
       run: bin/phpunit
     - name: Run phpstan
-      run: vendor/bin/phpstan analyse src tests --level max
+      run: vendor/bin/phpstan analyse
     - name: Run phpmd
       run: vendor/bin/phpmd src text phpmd.xml

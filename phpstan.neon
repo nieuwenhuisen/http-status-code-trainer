@@ -4,15 +4,15 @@ includes:
 	- vendor/phpstan/phpstan-phpunit/extension.neon
 
 parameters:
-    reportUnmatchedIgnoredErrors: false
     checkGenericClassInNonGenericObjectType: false
-
     autoload_files:
         - bin/.phpunit/phpunit-8.5-0/vendor/autoload.php
 
     symfony:
         container_xml_path: var/cache/test/App_KernelTestDebugContainer.xml
 
-    excludes_analyse:
-        # Migrations
-        - '**/Migrations/**.php'
+    level: max
+
+    paths:
+        - src
+        - tests
