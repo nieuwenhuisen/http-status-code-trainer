@@ -57,7 +57,7 @@ final class ExamService
         $exam = new Exam($user);
 
         $codes = $this->statusCodeRepository->getCodesGroupByType();
-        $statusCodes = $this->statusCodeRepository->getForUser($user);
+        $statusCodes = $this->statusCodeRepository->getRandom();
 
         for ($i = 0; $i < 10; ++$i) {
             $statusCode = $statusCodes[$i];

@@ -19,11 +19,16 @@ final class ExamQueryExtension implements QueryCollectionExtensionInterface
         $this->security = $security;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function applyToCollection(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null): void
     {
-        if (Exam::class !== $resourceClass || $this->security->isGranted('ROLE_ADMIN') || null === $user = $this->security->getUser()) {
+        if (Exam::class !== $resourceClass || $this->security->isGranted('ROLE_ADMIN') || null === $this->security->getUser()) {
             return;
         }
+
+        $user = $this->security->getUser();
 
         $rootAlias = $queryBuilder->getRootAliases()[0];
         $queryBuilder->andWhere(sprintf('%s.user = :user', $rootAlias));

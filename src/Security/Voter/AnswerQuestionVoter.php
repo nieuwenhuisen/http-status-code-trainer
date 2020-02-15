@@ -17,6 +17,9 @@ class AnswerQuestionVoter extends Voter
             && $subject instanceof Question;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
     {
         $user = $token->getUser();

@@ -23,11 +23,11 @@ class StatusCodeRepository extends ServiceEntityRepository
     /**
      * @return array|StatusCode[]
      */
-    public function getForUser(User $user): array
+    public function getRandom(int $limit = 20): array
     {
         // TODO: return results based on previous user results
         return $this->createQueryBuilder('status_code')
-            ->setMaxResults(20)
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
     }

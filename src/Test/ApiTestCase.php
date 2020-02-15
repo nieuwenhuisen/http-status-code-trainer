@@ -31,12 +31,12 @@ class ApiTestCase extends BaseApiTestCase
         ]);
 
         $data = json_decode($response->getContent(), true);
-        self::$users[$username] = $data;
+        static::$users[$username] = $data;
 
-        return static::createClient([], ['auth_bearer' => self::$users[$username]['token']]);
+        return static::createClient([], ['auth_bearer' => (static::$users)[$username]['token']]);
     }
 
-    protected static function createAuthenticatedAndVerifiedClient(string $username, string $key): Client
+    protected static function createAuthenticatedAndVerifiedClient(string $username): Client
     {
         $client = self::createAuthenticatedClient($username);
 
@@ -52,7 +52,7 @@ class ApiTestCase extends BaseApiTestCase
         $data = json_decode($response->getContent(), true);
         self::$users[$username] = $data;
 
-        return static::createClient([], ['auth_bearer' => self::$users[$username]['token']]);
+        return static::createClient([], ['auth_bearer' => (static::$users)[$username]['token']]);
     }
 
     protected function getEntityManager(): EntityManagerInterface

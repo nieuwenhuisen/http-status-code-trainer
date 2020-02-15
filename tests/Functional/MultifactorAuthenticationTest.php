@@ -111,7 +111,7 @@ final class MultifactorAuthenticationTest extends ApiTestCase
         $this->loadFixtures([UserFixture::class]);
 
         // Create a refresh token
-        static::createAuthenticatedAndVerifiedClient('user4@user.com', '2ADFDSJF86');
+        static::createAuthenticatedAndVerifiedClient('user4@user.com');
         $refreshToken = self::$users['user4@user.com']['refresh_token'];
 
         $client = static::createClient();
@@ -143,7 +143,7 @@ final class MultifactorAuthenticationTest extends ApiTestCase
     public function testDisableMultifactorAuthentication(): void
     {
         $this->loadFixtures([UserFixture::class]);
-        $client = static::createAuthenticatedAndVerifiedClient('user4@user.com', '2ADFDSJF86');
+        $client = static::createAuthenticatedAndVerifiedClient('user4@user.com');
 
         $client->request('POST', '/users/5/mfa_disable', ['json' => []]);
 

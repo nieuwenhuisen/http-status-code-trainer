@@ -98,38 +98,24 @@ class Exam
         return $this;
     }
 
-    public function updateStatus(): bool
+    public function isFinished(): bool
     {
-        if (ExamStatus::FINISHED === $this->status) {
-            return false;
-        }
+        return ExamStatus::FINISHED === $this->status;
+    }
 
-        $started = false;
+    public function updateStatus(): void
+    {
         $done = true;
 
         /** @var Question $question */
         foreach ($this->questions as $question) {
-            if (!$started && $question->isAnswered()) {
-                $started = true;
+            if ($question->isCorrect()) {
+                continue;
             }
 
-            if ($done && !$question->isCorrect()) {
-                $done = false;
-            }
+            $done = false;
         }
 
-        if ($done) {
-            $this->status = ExamStatus::FINISHED;
-
-            return true;
-        }
-
-        if (ExamStatus::CREATED === $this->status && $started) {
-            $this->status = ExamStatus::STARTED;
-
-            return true;
-        }
-
-        return false;
+        $this->status = $done ? ExamStatus::FINISHED : ExamStatus::STARTED;
     }
 }
